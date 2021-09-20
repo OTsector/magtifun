@@ -6,7 +6,7 @@
 #        _
 #  07   [|] 0ffensive 7ester
 #
-# last edit: 18/09/2021 04:31 #beta version 0.2
+# last edit: 20/09/2021 06:36 #beta version 0.7
 
 
 if [ $# -lt 2 ]; then
@@ -78,8 +78,8 @@ function deletePrev {
 				|tr -d "\r\n\t\0"|sed 's/<span class="page_number/\n&/g'|grep '<span class="page_number' \
 				|tail -n 1|awk -F '"' '{print $4}'|sed 's/.*_//g'
 	)
-	[ ${#lastPage} -eq 0 ] && return 0
-	for((i=1;i -le $lastPage; i++)); do
+	[ ${#lastPage} -eq 0 ] && lastPage=1
+	for((i=1;i<=$lastPage; i++)); do
 		data=$(
 			curl -sLgk 'http://www.magtifun.ge/index.php?page=10&lang=ge' -X POST \
 				-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
