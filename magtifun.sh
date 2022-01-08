@@ -19,7 +19,7 @@ msg="$2"
 uname=""
 passwd=""
 
-cookie='/tmp/cookie' # Just for use once
+cookie="/tmp/""$(sed 's/.*\///g;s/\..*//g' <<< "$0")"".cookie" # Just for use once
 
 function login {
 	token=$(
@@ -46,6 +46,8 @@ function login {
 }
 
 function sendMsg {
+	local sendTo="$1"
+	local msg="$2"
 	token=$(curl -sLgk 'http://www.magtifun.ge/index.php?page=2&lang=ge' \
 		-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
@@ -106,7 +108,7 @@ function deletePrev {
 
 login || { echo "ERROR: can't logIn"; exit 1; }
 
-sendMsg "Msg" || { echo "ERROR: can't send the message"; exit 1; }
+sendMsg "$sendTo" "$msg" || { echo "ERROR: can't send the message"; exit 1; }
 
 deletePrev || { echo "ERROR: can't delete the messages"; }
 
