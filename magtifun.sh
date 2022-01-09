@@ -6,7 +6,7 @@
 #        _
 #  07   [|] 0ffensive 7ester
 #
-# last edit: 20/09/2021 06:36 #beta version 0.7
+# last edit: 08/01/2022 12:34 #version 1.0
 
 
 if [ $# -lt 2 ]; then
@@ -46,8 +46,6 @@ function login {
 }
 
 function sendMsg {
-	local sendTo="$1"
-	local msg="$2"
 	token=$(curl -sLgk 'http://www.magtifun.ge/index.php?page=2&lang=ge' \
 		-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
@@ -64,7 +62,7 @@ function sendMsg {
 		-H 'Origin: http://www.magtifun.ge' -H 'DNT: 1' -H 'Connection: keep-alive' \
 		-H 'Referer: http://www.magtifun.ge/index.php?page=2&lang=ge' -b "$cookie" \
 		-H 'Pragma: no-cache' -H 'Cache-Control: no-cache' \
-		-d 'csrf_token='"$token"'&message_unicode=0&messages_count=1&recipients='"$sendTo"'&total_recipients=0&recipient='"$sendTo"'&message_body='"$msg" \
+		-d 'csrf_token='"$token"'&message_unicode=0&messages_count=1&recipients='"$1"'&total_recipients=0&recipient='"$1"'&message_body='"$2" \
 			|grep -q "success"
 	return $?
 }
