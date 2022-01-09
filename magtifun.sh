@@ -22,7 +22,7 @@ passwd=""
 cookie="/tmp/""$(sed 's/.*\///g;s/\..*//g' <<< "$0")"".cookie" # Just for use once
 
 function login {
-	token=$(
+	local token=$(
 		curl -sLgk 'http://www.magtifun.ge/' \
 			-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 			-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
@@ -46,7 +46,7 @@ function login {
 }
 
 function sendMsg {
-	token=$(curl -sLgk 'http://www.magtifun.ge/index.php?page=2&lang=ge' \
+	local token=$(curl -sLgk 'http://www.magtifun.ge/index.php?page=2&lang=ge' \
 		-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 		-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
 		-H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'DNT: 1' -H 'Connection: keep-alive' \
@@ -68,7 +68,7 @@ function sendMsg {
 }
 
 function deletePrev {
-	lastPage=$(
+	local lastPage=$(
 		curl -sLgk 'http://www.magtifun.ge/index.php?page=10&lang=ge' \
 			-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 			-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
@@ -80,7 +80,7 @@ function deletePrev {
 	)
 	[ ${#lastPage} -eq 0 ] && lastPage=1
 	for((i=1;i<=$lastPage; i++)); do
-		data=$(
+		local data=$(
 			curl -sLgk 'http://www.magtifun.ge/index.php?page=10&lang=ge' -X POST \
 				-A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0.1) Gecko/20100101 Firefox/76.0.1' \
 				-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' \
